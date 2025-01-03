@@ -1,11 +1,10 @@
 FROM python:3.12-slim
 
+RUN apt-get update && apt-get install -y python3-pip
+
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-COPY src /app/src/
-#COPY alembic /app/alembic/
-#COPY alembic.ini /app/alembic.ini
-
+COPY . /app
 
