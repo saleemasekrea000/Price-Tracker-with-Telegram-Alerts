@@ -5,6 +5,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    command: sh -c "/wait; sleep 5; alembic upgrade head; fastapi run app/src/main.py"
+    command: /bin/sh ./price_server.sh
     ports:
       - "8000:8000"
