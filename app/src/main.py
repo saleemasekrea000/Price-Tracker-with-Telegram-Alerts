@@ -15,7 +15,7 @@ app.add_middleware(
     max_age=3600,
 )
 
+
 @app.get("/")
 def health_check():
     return {"status": "Ok"}
-
