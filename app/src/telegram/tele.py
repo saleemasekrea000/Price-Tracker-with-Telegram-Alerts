@@ -6,6 +6,8 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
+from src.link_scraping import scrape_product_price
+
 from src.settings import base_settings
 
 
@@ -39,6 +41,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text(
                 f"Thank you! I will now track the product: {product_link} at the expected price of ₹{user_price:.2f}."
             )
+            
+            result = scrape_product_price.delay(user_product_link, user_price)
         except ValueError:
             await update.message.reply_text(
                 "Invalid price! Please enter a valid number."
@@ -52,6 +56,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 def main() -> None:
     application = Application.builder().token(f"{base_settings.bot_token}").build()
+
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(
